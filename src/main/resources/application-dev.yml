@@ -1,0 +1,39 @@
+spring:
+  redis:
+    host: localhost
+    port: 6379
+  data:
+    mongodb:
+      uri: mongodb+srv://onkarraut:onkar@cluster0.czfjgwy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: journalDB
+      auto-index-creation: true
+  main:
+    allow-circular-references: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: onkarraut117@gmail.com
+    password: xmuc hjer ebgh jocd
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+server:
+  port: 8080
+#  servlet:
+#    context-path: /journals
+
+weather:
+  api:
+    key: a0e3124eeefcbac008b41d02c8605e93
+
+
+

@@ -1,0 +1,23 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://onkarraut:onkar@cluster0.czfjgwy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: journalDB
+      auto-index-creation: true
+  main:
+    allow-circular-references: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+server:
+  port: 8081
+  servlet:
+    context-path: /journals
+
+
+#cpmmand line argument:
+#  -D spring.profiles.active=dev:to declare route.set java system properties
+# .\mvnw clean package:to clean

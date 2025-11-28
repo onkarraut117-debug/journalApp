@@ -10,6 +10,7 @@ import wannaBeDeveloper.journalApp.entity.JournalEntry;
 import wannaBeDeveloper.journalApp.entity.User;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,11 +38,11 @@ public class JournalEntryService {
 
         return saved;
     }
-
-    public List<JournalEntry> getAllEntriesOfUser(String userName) {
-        User user = userService.findByUserName(userName);
-        return user.getJournalEntries();
+    public List<JournalEntry> getAll() {
+        return journalEntryRepository.findAll();
     }
+
+
 
     public Optional<JournalEntry> getEntryById(String id, String userName) {
         User user = userService.findByUserName(userName);

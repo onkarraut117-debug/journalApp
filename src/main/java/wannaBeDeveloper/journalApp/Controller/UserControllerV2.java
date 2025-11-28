@@ -1,5 +1,6 @@
 package wannaBeDeveloper.journalApp.Controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import wannaBeDeveloper.journalApp.entity.User;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "UserAPI",description = "Read,Update,Delete")
 
 public class UserControllerV2 {
 @Autowired private UserService userService;
@@ -29,6 +31,7 @@ public ResponseEntity<?>updateUser(@RequestBody User user){
         userInDb.setUserName(user.getUserName());
         userInDb.setPassword(user.getPassword());
         userService.saveNewUser(userInDb);
+
     }
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 }

@@ -1,4 +1,4 @@
-package wannaBeDeveloper.journalApp.Configration;
+package wannaBeDeveloper.journalApp.configration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,15 +25,42 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http
+                // Disable CSRF because JWT is used
+                .csrf(csrf -> csrf.disable())
+
+                // Configure endpoint security
                 .authorizeHttpRequests(auth -> auth
+                        // Public Swagger/OpenAPI endpoints
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
+                        .requestMatchers(
+                                "/public/**",
+                                "/auth/google/**",     // 👈 allow Google OAuth endpoints
+                                "/login",
+                                "/register"
+                        ).permitAll()
+
+                        // Public endpoints like login/register
                         .requestMatchers("/public/**").permitAll()
+
+                        // Authenticated users can access journals and user endpoints
                         .requestMatchers("/journals/**", "/user/**").authenticated()
+
+                        // Admin-only endpoints
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        // Everything else requires authentication
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                // Stateless session management (JWT)
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
 
         // Add JWT filter before UsernamePasswordAuthenticationFilter

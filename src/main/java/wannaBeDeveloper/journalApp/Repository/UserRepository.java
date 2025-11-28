@@ -7,6 +7,8 @@ import wannaBeDeveloper.journalApp.entity.User;
 public interface UserRepository extends MongoRepository<User,String> {
     User findByUserName(String username);
     User deleteByUserName(String username);
+
+    User findByEmail(String email);
 }
 
 

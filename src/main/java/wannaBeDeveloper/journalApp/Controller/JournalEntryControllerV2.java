@@ -1,5 +1,7 @@
 package wannaBeDeveloper.journalApp.Controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/journals")
+@Tag(name = "JournalAPI")
 public class JournalEntryControllerV2 {
 
     @Autowired
@@ -25,14 +28,15 @@ public class JournalEntryControllerV2 {
     }
 
     @GetMapping
+    @Operation(summary = "get all journal entries")
     public ResponseEntity<List<JournalEntry>> getAllEntries() {
-        String userName = getLoggedInUserName();
-        List<JournalEntry> entries = journalEntryService.getAllEntriesOfUser(userName);
-        if (entries == null || entries.isEmpty()) {
+        List<JournalEntry> entries = journalEntryService.getAll();
+        if (entries.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(entries, HttpStatus.OK);
     }
+
 
     @PostMapping
     public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry entry) {
